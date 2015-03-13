@@ -23,6 +23,13 @@
 				delete x;
 				delete y;
 			
+			function get_query (name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			    var r = window.location.search.substr(1).match(reg);
+			    if (r != null) 
+			    	return decodeURI(r[2]); 
+			    return null;
+			}
 
 			function get_params() {
 				var x = window.location.search;
@@ -34,7 +41,7 @@
 						par[array[i].split("=")[0]] = decodeURI(array[i].split("=")[1])
 					};
 				}
-				delete x;
+				
 				return par;
 			}
 		}
