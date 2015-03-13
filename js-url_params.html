@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function(){
+			
+			// var x = "http://www.baidu.com/s?wd=Uncaught%20SyntaxError%3A%20Unexpected%20identifier&rsv_spt=1&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&rsv_pq=9e5b7c2e00130b39&rsv_t=ccc6%2F6l9lkTHC%2BDkwUYrQ6hWR23PGfcNEr2pf0qxTplnnBJ1WEpzyhzBZ6IWAB6gHS2N&inputT=15535&rsv_sug3=27&rsv_n=2&bs=chrome%20%E5%85%B3%E6%8E%89emulation"
+			// if(x.match(/\?/)){
+			// 	var y = get_params(unescape(x.split("?")[1]));
+			// 	console.log(y);
+			// 	for (x in y) {
+			// 		document.write("params["+x+"]= "+ y[x]+ "<br>");
+			// 	}
+				var y = get_params();
+				for (x in y) {
+					document.write("params["+x+"]= "+ y[x]+ "<br>");
+
+				}
+				delete x;
+				delete y;
+			
+
+			function get_params() {
+				var x = window.location.search;
+				var par = {};
+				if (x.indexOf("?") != -1) {
+					x = x.substr(1);
+					var array = x.split("&");
+					for (var i = 0; i < array.length; i++) {
+						par[array[i].split("=")[0]] = decodeURI(array[i].split("=")[1])
+					};
+				}
+				delete x;
+				return par;
+			}
+		}
+	</script>
+</body>
+</html>
