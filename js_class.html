@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function Mhash(){
+			this.obj = {};
+		}
+		Mhash.prototype.set = function mset(hash) {
+			for (x in hash){
+				this.obj[x] = hash[x];
+			}
+			return this.obj;
+		}
+		Mhash.prototype.length = function mlength() {
+			var count = 0;
+			for (x in this) {
+				if (this.hasOwnProperty(x)) {count++;};
+			};
+			return count;
+		}
+		Mhash.prototype.contain = function mcontain (attr) {
+			if (this.obj[attr]) {
+				return true;
+			};
+			return false;
+		}
+		Mhash.prototype.remove =function mremove (attr) {
+			if (this.obj[attr]) {
+				delete this.obj[attr];
+			}
+		}
+
+
+		mhash = new Mhash();
+		mhash.set({'b':1111111});
+		console.log(mhash.length());
+		mhash.remove('b');
+		console.log(mhash);
+	</script>
+</body>
+</html>
