@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>朋友圈转发拓扑人数</title>
+
+		<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.2.min.js"></script>
+		<style type="text/css">
+${demo.css}
+		</style>
+		<script type="text/javascript">
+$(function () {
+			
+	var friends_nums = 150;//每个人的朋友数量
+	var chuandi_cishu = 1;//传递衰减率
+	var chuandi_dist = 1;//义务传递深度
+	var chuandi_rate = 0.1;//转发率
+	
+	function People(friends,rate,dist){  
+     	this.friends = friends;
+		this.actives_rate = rate;
+		this.dist = dist;
+	}
+			
+	var total = 0;
+	function digui(person, level, delay){
+		total = total+1;
+		if(level >= chuandi_cishu){ return total;}
+		else{
+//			total = total + person.friends*person.actives_rate;
+			var i =0;
+			level = level + 1;
+			if(delay == 0){return total;}else{
+				for(i; i< person.friends*person.actives_rate;i++){
+					person = new People(friends_nums,chuandi_rate,delay);
+					digui(person, level, delay);
+				}
+				delay = person.dist - 1;
+			}
+			return total;
+		}
+	}
+	//person = new People(friends_nums,chuandi_rate,chuandi_dist);
+	//digui(person,1,1);
+
+	var data = {1:null,2:null,3:null,4:null,5:null,6:null};
+	for(level_ins in data)
+	{
+		total = 0;
+		chuandi_cishu = level_ins;
+		person = new People(friends_nums,chuandi_rate,chuandi_cishu);
+		data[level_ins]  = digui(person,1,1);
+		total = 0;
+	}
+	
+	cates1 = [];
+	values1 = []
+	for(x in data){cates1.push(x);values1.push(data[x])}
+	var friends_nums = 300;//每个人的朋友数量
+	for(level_ins in data)
+	{
+		total = 0;
+		chuandi_cishu = level_ins;
+		person = new People(friends_nums,chuandi_rate,chuandi_cishu);
+		data[level_ins]  = digui(person,1,1);
+		total = 0;
+	}
+	cates2 = [];
+	values2 = []
+	for(x in data){cates2.push(x);values2.push(data[x])}
+	var friends_nums = 450;//每个人的朋友数量
+	for(level_ins in data)
+	{
+		total = 0;
+		chuandi_cishu = level_ins;
+		person = new People(friends_nums,chuandi_rate,chuandi_cishu);
+		data[level_ins]  = digui(person,1,1);
+		total = 0;
+	}
+	cates3 = [];
+	values3 = []
+	for(x in data){cates3.push(x);values3.push(data[x])}
+	
+	$('#container').highcharts({
+            title: {
+                text: '曲线图，x轴为传播深度，y轴为传播人数',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '',
+                x: -20
+            },
+            xAxis: {
+                categories: cates1,
+            },
+            yAxis: {
+                title: {
+                    text: '人数'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '人'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: '150好友，0.1传播活跃度，传播',
+                data: values1
+            }, {
+                name: '300好友，0.1传播活跃度，传播',
+                data: values2
+            }, {
+                name: '450好友，0.1传播活跃度，传播',
+                data: values3
+            }]
+        });
+    });
+    
+
+		</script>
+	</head>
+	<body>
+<script src="../../js/highcharts.js"></script>
+<script src="../../js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
